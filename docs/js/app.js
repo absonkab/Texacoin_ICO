@@ -468,6 +468,7 @@ App = {
         }).then(function(weiRaised) {
             weiRaised = parseInt(weiRaised.toString());
             console.log("weiRaised: ", weiRaised);
+            console.log("ici mon gars: ");
             //weiRaised = weiRaised.toNumber();
             let tksold = weiRaised * App.tokenRate * Math.pow(10, -App.decimals);
             //App.tokensSold = tksold;
@@ -476,7 +477,7 @@ App = {
             //$('.tokens-sold').html(App.tokensSold);
             $('.tokens-available').html(App.tokensAvailable);
 
-            var progressPercent = (Math.ceil(App.tokensSold) / App.tokensAvailable) * 100;
+            var progressPercent = (Math.ceil(App.balanceOwner) / 1000000000) * 100;
             $('#progress').css('width', progressPercent + '%');
 
             // Load token contract
@@ -506,9 +507,17 @@ App = {
                 //App.tokensSold = App.convertExpToDec(weiRaised*App.tokenPrice*Math.pow(10, -App.decimals));
                 App.tokenPrice = App.noExponents(web3.utils.fromWei(App.rate, "ether") / (10 ** App.decimals) * 7.37)
                 $('.token-price').html(App.tokenPrice);
-                $('.tokens-sold').html(App.tokensSold);
+                //$('.tokens-sold').html(App.tokensSold);
                 console.log("decimals: ", decimals);
                 console.log("tokensSold: ", weiRaised * App.tokenRate * Math.pow(10, -App.decimals));
+            });
+            App.contracts.TXCNToken.methods.balanceOf("0xD10957cC5af8819AF00fd1902a32F1d4BaD4746f").call().then(function(balanceOwner) {
+                balanceOwner = parseInt(balanceOwner.toString());
+                balanceOwner = App.noExponents(balanceOwner / 10 ** App.decimals);
+                console.log("balanceOwner: ", balanceOwner);
+                $('.tokens-sold').html(1000000000-balanceOwner);
+                var progressPercent = (Math.ceil(1000000000-balanceOwner) / 1000000000) * 100;
+                $('#progress').css('width', progressPercent + '%');
             });
             App.contracts.TXCNToken.methods.totalSupply().call().then(function(totalSupply) {
                 totalSupply = parseInt(totalSupply.toString());
@@ -528,12 +537,6 @@ App = {
                 loader2.hide();
                 loader3.hide();
                 content.show();
-            });
-            App.contracts.TXCNToken.methods.allowance("0xA00a319207f533af1fc6a5380F75F67759A78d67","0x097c568230c643F7edb98Eb9F1456978638374b1").call().then(function(allowance) {
-                allowance = parseInt(allowance.toString());
-                //balance = balance.toNumber();
-                //allowance = App.noExponents(allowance / 10 ** App.decimals);
-                console.log("allowance: ", allowance);
             });
 
         }).catch(e => {
