@@ -505,7 +505,7 @@ App = {
                 App.decimals = decimals;
                 App.tokensSold = parseInt(App.noExponents(weiRaised * App.tokenRate * Math.pow(10, -App.decimals)));
                 //App.tokensSold = App.convertExpToDec(weiRaised*App.tokenPrice*Math.pow(10, -App.decimals));
-                App.tokenPrice = App.noExponents(web3.utils.fromWei(App.rate, "ether") / (10 ** App.decimals) * 7.37)
+                App.tokenPrice = App.noExponents(1/web3.utils.fromWei(App.rate, "ether") / (10 ** App.decimals))
                 $('.token-price').html(App.tokenPrice);
                 //$('.tokens-sold').html(App.tokensSold);
                 console.log("decimals: ", decimals);
