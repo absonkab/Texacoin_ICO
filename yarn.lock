@@ -6860,6 +6860,11 @@
     "tar" "^4.0.2"
     "xhr-request" "^1.0.1"
 
+"sweetalert2@^11.4.4":
+  "integrity" "sha512-9yYWQuRT1v9JNI/paPTSYV+68MHwe9C+HQ/I2jtfaFzoJgYRftWXOs4JqmDSjT7m2m4r8ebMMn8LcxD1Wq9B/w=="
+  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.4.4.tgz"
+  "version" "11.4.4"
+
 "symbol-observable@1.0.1":
   "integrity" "sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ="
   "resolved" "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.0.1.tgz"

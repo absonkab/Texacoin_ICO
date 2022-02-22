@@ -397,7 +397,7 @@ App = {
 
                 // web3.eth.contract(abi).at(contract_address) is the  magic line to get the contract object.
                 App.contracts.TXCNToken = new web3.eth.Contract(App.abi, App.contract_address);
-                console.log(App.contracts.TXCNToken.methods.name());
+                //console.log(App.contracts.TXCNToken.methods.name());
                 App.contracts.TXCNToken.setProvider(App.web3Provider);
                 App.contracts.TXCNToken.methods.decimals().call().then(console.log);
                 App.contracts.TXCNToken.methods.name().call().then(function(txcnToken) {
@@ -432,11 +432,13 @@ App = {
         App.loading = true;
 
         var loader = $('#loader');
+        var loader1 = $('#loader1');
         var loader2 = $('#loader2');
         var loader3 = $('#loader3');
         var content = $('#content');
 
         loader.show();
+        loader1.hide();
         loader2.hide();
         loader3.hide();
         content.hide();
@@ -445,7 +447,7 @@ App = {
         web3.eth.getCoinbase(function(err, account) {
             if (err === null) {
                 App.account = account;
-                $('#accountAddress').html("L'adresse de votre wallet: " + account);
+                $('#accountAddress').html( account);
             }
         })
 
@@ -463,22 +465,21 @@ App = {
             App.rate = rate;
             //$('.token-price').html(web3.utils.fromWei(App.tokenPrice, "ether"));
             App.tokenRate = parseInt(App.rate.toString());
-            console.log("rate: ", App.tokenRate);
+            //console.log("rate: ", App.tokenRate);
             return txcncrowdsaleInstance.weiRaised();
         }).then(function(weiRaised) {
             weiRaised = parseInt(weiRaised.toString());
-            console.log("weiRaised: ", weiRaised);
-            console.log("ici mon gars: ");
+            //console.log("weiRaised: ", weiRaised);
             //weiRaised = weiRaised.toNumber();
             let tksold = weiRaised * App.tokenRate * Math.pow(10, -App.decimals);
             //App.tokensSold = tksold;
-            console.log("token sold: ", tksold);
-            console.log("weiRaised: ", weiRaised);
+            //console.log("token sold: ", tksold);
+            //console.log("weiRaised: ", weiRaised);
             //$('.tokens-sold').html(App.tokensSold);
-            $('.tokens-available').html(App.tokensAvailable);
+            //$('.tokens-available').html(App.tokensAvailable);
 
             var progressPercent = (Math.ceil(App.balanceOwner) / 1000000000) * 100;
-            $('#progress').css('width', progressPercent + '%');
+            //$('#progress').css('width', progressPercent + '%');
 
             // Load token contract
             App.contracts.TXCNToken = new web3.eth.Contract(App.abi, App.contract_address);
@@ -498,7 +499,7 @@ App = {
             App.contracts.TXCNToken.methods.symbol().call().then(function(symbol) {
                 App.symbol = symbol;
                 $('.abs-symbol').html(App.symbol);
-                $('#tokenAddress').html("Adresse du token " + App.symbol + ": " + App.tokAddress);
+                $('#tokenAddress').html(App.tokAddress);
                 console.log("symbol: ", symbol);
             });
             App.contracts.TXCNToken.methods.decimals().call().then(function(decimals) {
@@ -514,10 +515,10 @@ App = {
             App.contracts.TXCNToken.methods.balanceOf("0xD10957cC5af8819AF00fd1902a32F1d4BaD4746f").call().then(function(balanceOwner) {
                 balanceOwner = parseInt(balanceOwner.toString());
                 balanceOwner = App.noExponents(balanceOwner / 10 ** App.decimals);
-                console.log("balanceOwner: ", balanceOwner);
-                $('.tokens-sold').html(1000000000-balanceOwner);
+                //console.log("balanceOwner: ", balanceOwner);
+                //$('.tokens-sold').html(1000000000-balanceOwner);
                 var progressPercent = (Math.ceil(1000000000-balanceOwner) / 1000000000) * 100;
-                $('#progress').css('width', progressPercent + '%');
+                //$('#progress').css('width', progressPercent + '%');
             });
             App.contracts.TXCNToken.methods.totalSupply().call().then(function(totalSupply) {
                 totalSupply = parseInt(totalSupply.toString());
@@ -534,6 +535,7 @@ App = {
                 $('.abs-balance').html(balance);
                 App.loading = false;
                 loader.hide();
+                loader1.hide();
                 loader2.hide();
                 loader3.hide();
                 content.show();
@@ -541,13 +543,29 @@ App = {
 
         }).catch(e => {
             if (!App.web3Connect) {
-                window.alert("Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site");
-                App.web3Connect = true;
-                $('#loader').hide();
-                $('#loader3').show();
+                Swal.fire({
+                    title: 'Attention',
+                    text: "Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site",
+                    icon: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        App.web3Connect = true;
+                        $('#loader').hide();
+                        $('#loader3').show();
+                    }else{
+                        App.web3Connect = true;
+                        $('#loader').hide();
+                        $('#loader3').show();
+                    }
+                })
+                //window.alert("Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site");
+                
             } else {
-                $('#loader3').show();
-                $('#content').hide();
+                $('#loader3').hide();
+                $('#content').show();
                 $('#loader').hide();
                 $('#loader2').hide();
             }
@@ -558,8 +576,9 @@ App = {
     buyTokens: function() {
         $('#content').hide();
         $('#loader').hide();
+        $('#loader2').hide();
         $('#loader3').hide();
-        $('#loader2').show();
+        $('#loader1').show();
         var numberOfTokens = $('#numberOfTokens').val();
         console.log("Amount of Tokens bought...", numberOfTokens)
         numberOfTokens = Number(numberOfTokens);
@@ -574,19 +593,60 @@ App = {
                 from: App.account
             });
         }).then(function(result) {
-            console.log("Tokens bought...", numberOfTokens)
+            $('#content').hide();
+            $('#loader').hide();
+            $('#loader1').hide();
+            $('#loader3').hide();
+            $('#loader2').show();
+            console.log("Tokens bought: ", numberOfTokens)
             $('form').trigger('reset') // reset number of tokens in form
-            location.reload();
+            Swal.fire(
+                'Good job!',
+                'You clicked the button!',
+                'success'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }else{
+                    location.reload();
+                }
+            })
             // Wait for Sell event
         }).catch(e => {
             if (e.code === 4001) {
+                Swal.fire({
+                    title: 'Transaction annulée!',
+                    text: "Vous avez réjeté la transaction!",
+                    icon: 'error',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }else{
+                        location.reload();
+                    }
+                })
                 //user rejected the transaction
-                alert("Vous avez rejeté la transaction");
-                location.reload();
+                //alert("Vous avez rejeté la transaction");
             } else {
                 console.log(e)
-                alert("Une erreur s'est produite! \n Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!")
-                location.reload();
+                //alert("Une erreur s'est produite! \n Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!")
+                Swal.fire({
+                    title: 'Une erreur s\'est produite!',
+                    text: "Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!",
+                    icon: 'warning',
+                    showCancelButton: false,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }else{
+                        location.reload();
+                    }
+                })
             }
         })
         /*.catch(function (e) {

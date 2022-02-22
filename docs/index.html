@@ -8,24 +8,33 @@
     <title>TEXACOIN Token ICO</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/sweetalert2.min.css">
     <!--<script type="text/javascript" src="./dist/truffle-contract.min.js"></script>-->
 </head>
 
 <body>
-    <div class="container" style="width: 650px;">
-        <div class="row">
+    <div class="container">
+        <div class="row round">
             <div class="col-lg-12">
                 <h1 class="text-center"><span class="abs-name"></span>&nbsp;ICO</h1>
                 <hr/>
+                <h1 class="text-center">ICO Round 2 | Date de fin: 28/02/2022</h1>
                 <br/>
             </div>
-            <div id="loader">
+        </div>
+        <div class="row form">
+            <div id="loader" class="text-center">
                 <p class="text-center">Chargement...</p>
+            </div>
+            <div id="loader1" style="display: none;">
+                <p class="text-center">Ouverture de Metamask...</p>
+                <p class="text-center"><strong>Veuillez confirmer la transaction.</strong></p>
             </div>
             <div id="loader2" style="display: none;">
                 <p class="text-center">Achat en cours...</p>
-                <p class="text-center"><strong>Veuillez patienter.</strong></p>
-                <p class="text-center"><strong>Cette opération peut prendre quelques minutes.</strong></p>
+                <p class="text-center"><strong>Veuillez patienter le temps que la blockchain enregistre votre transaction.</strong></p>
+                <p class="text-center"><strong>Cette opération peut prendre plusieurs secondes.</strong></p>
             </div>
             <div id="loader3" style="display: none;">
                 <p class="text-center">Aucun Metamask Connecté!</p>
@@ -35,29 +44,37 @@
 
             <div id="content" class="text-center" style="display: none;">
                 <p>
-                    Présentation de <span class="abs-name"></span>&nbsp; (<span class="abs-symbol"></span>) !
-                    <br/> Le prix du Token est <span class="token-price"></span> BNB la pièce. Vous avez actuellement <span class="abs-balance"></span>&nbsp;<span class="abs-symbol"></span>&nbsp;.
+                    <br/> Le prix du Token est <span class="token-price"></span> BNB. 
+                    <hr/>
+                    <br/> Vous avez actuellement <span class="abs-balance"></span>&nbsp;<span class="abs-symbol"></span>&nbsp;.
                 </p>
                 <br/>
                 <form onSubmit="App.buyTokens(); return false;" role="form">
-                    <div class="form-group">
+                    <div class="form-group champ">
                         <div class="input-group">
                             <input id="numberOfTokens" class="form-control input-lg" type="number" name="number" value="280" min="280" max="1000000" pattern="[0-10000]"><!---->
                             <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-lg">Acheter</button>
-                        </span>
+                                <button type="submit" class="btn btn-primary btn-lg bouton">Acheter</button>
+                            </span>
                         </div>
                     </div>
                 </form>
-                <br>
+                <br><!--
                 <div class="progress">
                     <div id="progress" class="progress-bar progress-bar-striped active" aria-valuemin="0" aria-valuemax="100">
                     </div>
                 </div>
-                <p><span class="tokens-sold">&nbsp;</span> <span class="abs-symbol"></span>&nbsp;sur <span class="abs-totalSupply"></span> en circulation.</p>
+                <p><span class="tokens-sold">&nbsp;</span> <span class="abs-symbol"></span>&nbsp;sur <span class="abs-totalSupply"></span> en circulation.</p>-->
                 <hr>
-                <p id="tokenAddress"></p><br/>
-                <p id="accountAddress"></p>
+                <p>
+                    Adresse du token <span class="abs-name"></span> (<span class="abs-symbol"></span>):
+                </p>
+                <p>
+                    <span class="p" id="tokenAddress"></span>
+                </p>
+                <br/>
+                <p>L'adresse de votre wallet:</p>
+                <p class="p" id="accountAddress"></p>
             </div>
         </div>
     </div>
@@ -67,6 +84,7 @@
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
