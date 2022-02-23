@@ -435,12 +435,14 @@ App = {
         var loader1 = $('#loader1');
         var loader2 = $('#loader2');
         var loader3 = $('#loader3');
+        var loader4 = $('#loader4');
         var content = $('#content');
 
         loader.show();
         loader1.hide();
         loader2.hide();
         loader3.hide();
+        loader4.hide();
         content.hide();
 
         // Load account data
@@ -538,6 +540,7 @@ App = {
                 loader1.hide();
                 loader2.hide();
                 loader3.hide();
+                loader4.hide();
                 content.show();
             });
 
@@ -553,21 +556,47 @@ App = {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         App.web3Connect = true;
-                        $('#loader').hide();
-                        $('#loader3').show();
+                        loader.hide();
+                        loader1.hide();
+                        loader2.hide();
+                        loader3.show();
+                        loader4.hide();
+                        content.hide();
                     }else{
                         App.web3Connect = true;
-                        $('#loader').hide();
-                        $('#loader3').show();
+                        loader.hide();
+                        loader1.hide();
+                        loader2.hide();
+                        loader3.show();
+                        loader4.hide();
+                        content.hide();
                     }
                 })
                 //window.alert("Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site");
                 
             } else {
-                $('#loader3').hide();
-                $('#content').show();
-                $('#loader').hide();
-                $('#loader2').hide();
+                Swal.fire(
+                    'Problème de connexion!',
+                    'Assurez vous d\'être connecté à Internet!',
+                    'warning'
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        loader.hide();
+                        loader1.hide();
+                        loader2.hide();
+                        loader3.hide();
+                        loader4.show();
+                        content.hide();
+                    }else{
+                        loader.hide();
+                        loader1.hide();
+                        loader2.hide();
+                        loader3.hide();
+                        loader4.show();
+                        content.hide();
+                    }
+                })
+                
             }
 
         });
@@ -578,6 +607,7 @@ App = {
         $('#loader').hide();
         $('#loader2').hide();
         $('#loader3').hide();
+        $('#loader4').hide();
         $('#loader1').show();
         var numberOfTokens = $('#numberOfTokens').val();
         console.log("Amount of Tokens bought...", numberOfTokens)
@@ -597,6 +627,7 @@ App = {
             $('#loader').hide();
             $('#loader1').hide();
             $('#loader3').hide();
+            $('#loader4').hide();
             $('#loader2').show();
             console.log("Tokens bought: ", numberOfTokens)
             $('form').trigger('reset') // reset number of tokens in form
@@ -688,6 +719,17 @@ App = {
 
 $(function() {
     $(window).load(function() {
-        App.init();
+        Swal.fire({
+            icon: 'info',
+            title: 'BIENVENU(E)',
+            text: 'Au 2ème Round de l\'ICO TEXACOIN',
+            footer: '<a href="">Vidéo tutorielle sur l\'achat</a>'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                App.init();
+            }else{
+                App.init();
+            }
+        })
     })
 });
