@@ -355,9 +355,10 @@ App = {
             App.web3Connect = true;
         } else {
             // Specify default instance if no web3 instance provided
-            App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
-            web3 = new Web3(App.web3Provider);
-            App.web3Connect = true;
+            //App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+            //web3 = new Web3(App.web3Provider);
+            //App.web3Connect = true;
+            //console.log("App.web3Connect: ",App.web3Connect)
         }
         // Check the connection
         /*if (!web3.isConnected()) {
@@ -450,6 +451,7 @@ App = {
             if (err === null) {
                 App.account = account;
                 $('#accountAddress').html( account);
+                console.log("account address: ",App.account)
             }
         })
 
@@ -542,10 +544,12 @@ App = {
                 loader3.hide();
                 loader4.hide();
                 content.show();
+            }).catch(e =>{
+                alert("web3");
             });
 
         }).catch(e => {
-            if (!App.web3Connect) {
+            if (!App.account) {
                 Swal.fire({
                     title: 'Attention',
                     text: "Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site",
