@@ -722,8 +722,9 @@ App = {
 }
 
 $(function() {
+    
     $(window).load(function() {
-        Swal.fire({
+        /*Swal.fire({
             icon: 'info',
             title: 'BIENVENU(E)',
             text: 'Au 2ème Round de l\'ICO TEXACOIN',
@@ -734,6 +735,7 @@ $(function() {
             }else{
                 App.init();
             }
-        })
+        })*/
+        App.init();
     })
 });
