@@ -636,8 +636,8 @@ App = {
             console.log("Tokens bought: ", numberOfTokens)
             $('form').trigger('reset') // reset number of tokens in form
             Swal.fire(
-                'Good job!',
-                'You clicked the button!',
+                'Effectué!',
+                'Achat réussi!\n Consulter votre portefeuille \n Insérer le token dans votre portefeuille si ce n\'est pas encore fait',
                 'success'
             ).then((result) => {
                 if (result.isConfirmed) {
