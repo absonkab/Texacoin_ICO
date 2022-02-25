@@ -1,15 +1,19 @@
 body {
-    background-color: #0b0c22; /*#47209c*/
+    background-color: #0b0c22;
+    /*#47209c*/
     font-family: Font Awesome 5 Brands;
-} 
+}
+
 .container {
     width: 750px;
 }
+
 .row {
     margin-top: 30px;
     background-color: #47209c;
     width: auto;
-} 
+}
+
 .form {
     color: white;
     font-size: 1.3em;
@@ -17,20 +21,26 @@ body {
     padding-bottom: 5px;
     padding-top: 10px;
 }
+
 .round {
     margin-top: 20px;
     color: white;
     font-size: 1.6em;
     border-radius: 15px 15px;
     animation: mymove 5s infinite;
-} 
-@keyframes mymove {
-    50% {border-radius: 80px;}
 }
+
+@keyframes mymove {
+    50% {
+        border-radius: 80px;
+    }
+}
+
 .champ {
     margin-right: 5%;
     margin-left: 5%;
 }
+
 .btn {
     font-family: "Poppins", sans-serif;
     font-size: 17px;
@@ -50,13 +60,21 @@ body {
     border-radius: 40px;
     background-image: linear-gradient(to right, #2b56f5 0%, #46bdf4 100%);
 }
+
 .p {
     /*border: 1px solid white;*/
     border-radius: 10px 10px;
     padding: 5px;
     background-color: #0b0c22;
 }
-hr{
+
+hr {
     border: 1px solid #ffffff;
     border-radius: 5px;
+}
+
+@media only screen and (max-width:750px) {
+    .container {
+        width: 480px;
+    }
 }

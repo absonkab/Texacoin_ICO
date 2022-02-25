@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width" />
     <title>TEXACOIN Token ICO</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +50,7 @@
 
             <div id="content" class="text-center" style="display: none;">
                 <p>
-                    <br/> Le prix du Token est <span class="token-price"></span> BNB. 
+                    <br/> Le prix du Token est <span class="token-price"></span> BNB.
                     <hr/>
                     <br/> Vous avez actuellement <span class="abs-balance"></span>&nbsp;<span class="abs-name"></span>&nbsp;(<span class="abs-symbol"></span>).
                 </p>
@@ -57,14 +58,16 @@
                 <form onSubmit="App.buyTokens(); return false;" role="form">
                     <div class="form-group champ">
                         <div class="input-group">
-                            <input id="numberOfTokens" class="form-control input-lg" type="number" name="number" value="280" min="280" max="1000000" pattern="[0-10000]"><!---->
+                            <input id="numberOfTokens" class="form-control input-lg" type="number" name="number" value="280" min="280" max="1000000" pattern="[0-10000]">
+                            <!---->
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-primary btn-lg bouton">Acheter</button>
                             </span>
                         </div>
                     </div>
                 </form>
-                <br><!--
+                <br>
+                <!--
                 <div class="progress">
                     <div id="progress" class="progress-bar progress-bar-striped active" aria-valuemin="0" aria-valuemax="100">
                     </div>
