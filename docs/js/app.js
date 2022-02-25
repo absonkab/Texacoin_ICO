@@ -450,8 +450,8 @@ App = {
         web3.eth.getCoinbase(function(err, account) {
             if (err === null) {
                 App.account = account;
-                $('#accountAddress').html( account);
-                console.log("account address: ",App.account)
+                $('#accountAddress').html(account);
+                console.log("account address: ", App.account)
             }
         })
 
@@ -510,7 +510,7 @@ App = {
                 App.decimals = decimals;
                 App.tokensSold = parseInt(App.noExponents(weiRaised * App.tokenRate * Math.pow(10, -App.decimals)));
                 //App.tokensSold = App.convertExpToDec(weiRaised*App.tokenPrice*Math.pow(10, -App.decimals));
-                App.tokenPrice = App.noExponents(1/web3.utils.fromWei(App.rate, "ether") / (10 ** App.decimals))
+                App.tokenPrice = App.noExponents(1 / web3.utils.fromWei(App.rate, "ether") / (10 ** App.decimals))
                 $('.token-price').html(App.tokenPrice);
                 //$('.tokens-sold').html(App.tokensSold);
                 console.log("decimals: ", decimals);
@@ -521,13 +521,13 @@ App = {
                 balanceOwner = App.noExponents(balanceOwner / 10 ** App.decimals);
                 //console.log("balanceOwner: ", balanceOwner);
                 //$('.tokens-sold').html(1000000000-balanceOwner);
-                var progressPercent = (Math.ceil(1000000000-balanceOwner) / 1000000000) * 100;
+                var progressPercent = (Math.ceil(1000000000 - balanceOwner) / 1000000000) * 100;
                 //$('#progress').css('width', progressPercent + '%');
             });
             App.contracts.TXCNToken.methods.totalSupply().call().then(function(totalSupply) {
                 totalSupply = parseInt(totalSupply.toString());
                 App.totalSupply = parseInt(App.noExponents(totalSupply * Math.pow(10, -App.decimals)));
-                $('.abs-totalSupply').html(App.totalSupply-2000000000);
+                $('.abs-totalSupply').html(App.totalSupply - 2000000000);
                 console.log("totalSupply: ", App.totalSupply);
             });
 
@@ -544,44 +544,44 @@ App = {
                 loader3.hide();
                 loader4.hide();
                 content.show();
-            }).catch(e =>{
+            }).catch(e => {
                 alert("web3");
             });
 
         }).catch(e => {
             if (!App.account) {
                 Swal.fire({
-                    title: 'Attention',
-                    text: "Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site",
-                    icon: 'warning',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        App.web3Connect = true;
-                        loader.hide();
-                        loader1.hide();
-                        loader2.hide();
-                        loader3.show();
-                        loader4.hide();
-                        content.hide();
-                    }else{
-                        App.web3Connect = true;
-                        loader.hide();
-                        loader1.hide();
-                        loader2.hide();
-                        loader3.show();
-                        loader4.hide();
-                        content.hide();
-                    }
-                })
-                //window.alert("Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site");
-                
+                        title: 'Attention',
+                        text: "Aucun portefeuille Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre portefeuille à ce site",
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            App.web3Connect = true;
+                            loader.hide();
+                            loader1.hide();
+                            loader2.hide();
+                            loader3.show();
+                            loader4.hide();
+                            content.hide();
+                        } else {
+                            App.web3Connect = true;
+                            loader.hide();
+                            loader1.hide();
+                            loader2.hide();
+                            loader3.show();
+                            loader4.hide();
+                            content.hide();
+                        }
+                    })
+                    //window.alert("Aucun Metamask Connecté. Ce site est un site d'achat de jetons - pour continuer, vous devez connecter votre wallet Metamask à ce site");
+
             } else {
                 Swal.fire(
                     'Problème de connexion!',
-                    'Assurez vous d\'être connecté à Internet!',
+                    'Vérifiez votre connexion Internet! \n Si vous utilisez un téléphone mobile, changez le réseau du portefeuille sur Smart Chain.',
                     'warning'
                 ).then((result) => {
                     if (result.isConfirmed) {
@@ -591,7 +591,7 @@ App = {
                         loader3.hide();
                         loader4.show();
                         content.hide();
-                    }else{
+                    } else {
                         loader.hide();
                         loader1.hide();
                         loader2.hide();
@@ -600,7 +600,7 @@ App = {
                         content.hide();
                     }
                 })
-                
+
             }
 
         });
@@ -622,74 +622,74 @@ App = {
         console.log("nombre de wei correspondant ", numberOfWeis);
         console.log("valeur en BNB correspondant ", numberOfWeis * Math.pow(10, -App.decimals));
         App.contracts.TXCNCrowdsale.deployed().then(function(instance) {
-            return instance.buyTokens(App.account, {
-                value: numberOfWeis,
-                from: App.account
-            });
-        }).then(function(result) {
-            $('#content').hide();
-            $('#loader').hide();
-            $('#loader1').hide();
-            $('#loader3').hide();
-            $('#loader4').hide();
-            $('#loader2').show();
-            console.log("Tokens bought: ", numberOfTokens)
-            $('form').trigger('reset') // reset number of tokens in form
-            Swal.fire(
-                'Effectué!',
-                'Achat réussi!\n Consulter votre portefeuille \n Insérer le token dans votre portefeuille si ce n\'est pas encore fait',
-                'success'
-            ).then((result) => {
-                if (result.isConfirmed) {
-                    location.reload();
-                }else{
-                    location.reload();
+                return instance.buyTokens(App.account, {
+                    value: numberOfWeis,
+                    from: App.account
+                });
+            }).then(function(result) {
+                $('#content').hide();
+                $('#loader').hide();
+                $('#loader1').hide();
+                $('#loader3').hide();
+                $('#loader4').hide();
+                $('#loader2').show();
+                console.log("Tokens bought: ", numberOfTokens)
+                $('form').trigger('reset') // reset number of tokens in form
+                Swal.fire(
+                        'Effectué!',
+                        'Achat réussi!\n Consulter votre portefeuille \n Insérer le token dans votre portefeuille si ce n\'est pas encore fait',
+                        'success'
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    })
+                    // Wait for Sell event
+            }).catch(e => {
+                if (e.code === 4001) {
+                    Swal.fire({
+                            title: 'Transaction annulée!',
+                            text: "Vous avez réjeté la transaction!",
+                            icon: 'error',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        })
+                        //user rejected the transaction
+                        //alert("Vous avez rejeté la transaction");
+                } else {
+                    console.log(e)
+                        //alert("Une erreur s'est produite! \n Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!")
+                    Swal.fire({
+                        title: 'Une erreur s\'est produite!',
+                        text: "Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!",
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    })
                 }
             })
-            // Wait for Sell event
-        }).catch(e => {
-            if (e.code === 4001) {
-                Swal.fire({
-                    title: 'Transaction annulée!',
-                    text: "Vous avez réjeté la transaction!",
-                    icon: 'error',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }else{
-                        location.reload();
-                    }
-                })
-                //user rejected the transaction
-                //alert("Vous avez rejeté la transaction");
-            } else {
-                console.log(e)
-                //alert("Une erreur s'est produite! \n Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!")
-                Swal.fire({
-                    title: 'Une erreur s\'est produite!',
-                    text: "Vérifiez que vous avez assez de BNB smart chain pour couvrir les frais de réseau!",
-                    icon: 'warning',
-                    showCancelButton: false,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }else{
-                        location.reload();
-                    }
-                })
-            }
-        })
-        /*.catch(function (e) {
-            // Transaction rejected or failed
-            console.log(e);
-            alert("Vous avez rejeté la transaction");
-            location.reload();
-        })*/
+            /*.catch(function (e) {
+                // Transaction rejected or failed
+                console.log(e);
+                alert("Vous avez rejeté la transaction");
+                location.reload();
+            })*/
         ;
     },
 
@@ -722,7 +722,7 @@ App = {
 }
 
 $(function() {
-    
+
     $(window).load(function() {
         /*Swal.fire({
             icon: 'info',
